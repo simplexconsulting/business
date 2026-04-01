@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Simplex Consulting — Eliminate the Unnecessary</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #ffffff;
+      --bg-secondary: #f5f5f2;
+      --text: #1a1a18;
+      --text-secondary: #5a5a55;
+      --text-tertiary: #9a9a94;
+      --border: rgba(0,0,0,0.09);
+      --border-mid: rgba(0,0,0,0.16);
+      --accent: #1a3a2a;
+      --accent-mid: #2d6147;
+      --accent-light: #e8f2ec;
+      --accent-muted: #a8c4b4;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      font-size: 16px;
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.25rem 4rem;
+      border-bottom: 0.5px solid var(--border);
+      position: sticky;
+      top: 0;
+      background: rgba(255,255,255,0.96);
+      backdrop-filter: blur(8px);
+      z-index: 100;
+    }
+
+    .logo {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      color: var(--text);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .logo-dot {
+      width: 8px;
+      height: 8px;
+      background: var(--accent-mid);
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    nav ul { list-style: none; display: flex; gap: 2.5rem; align-items: center; }
+
+    nav ul a {
+      text-decoration: none;
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      font-weight: 400;
+      transition: color 0.2s;
+    }
+
+    nav ul a:hover { color: var(--text); }
+
+    .nav-cta {
+      background: var(--accent) !important;
+      color: #fff !important;
+      padding: 0.5rem 1.25rem !important;
+      border-radius: 5px;
+      font-weight: 500 !important;
+    }
+
+    .nav-cta:hover { opacity: 0.88; }
+
+    /* HERO */
+    .hero {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 7rem 4rem 6rem;
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 5rem;
+      align-items: center;
+    }
+
+    .hero-eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 2rem;
+    }
+
+    .eyebrow-line { width: 32px; height: 1.5px; background: var(--accent-mid); }
+
+    .eyebrow-text {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent-mid);
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 3.8rem;
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -1.5px;
+      margin-bottom: 1.5rem;
+      color: var(--text);
+    }
+
+    h1 em { font-style: italic; color: var(--accent-mid); }
+
+    .hero-sub {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      font-weight: 300;
+      line-height: 1.8;
+      margin-bottom: 1.5rem;
+      max-width: 460px;
+    }
+
+    .hero-tag {
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--accent-mid);
+      background: var(--accent-light);
+      padding: 0.4rem 1rem;
+      border-radius: 4px;
+      display: inline-block;
+      margin-bottom: 2.5rem;
+    }
+
+    .hero-actions { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      padding: 0.8rem 1.75rem;
+      border-radius: 5px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      transition: opacity 0.2s;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .btn-primary:hover { opacity: 0.85; }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--text);
+      border: 0.5px solid var(--border-mid);
+      padding: 0.8rem 1.75rem;
+      border-radius: 5px;
+      font-size: 0.9rem;
+      font-weight: 400;
+      cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      transition: background 0.2s;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .btn-ghost:hover { background: var(--bg-secondary); }
+
+    /* HERO PANEL */
+    .hero-panel {
+      background: var(--bg-secondary);
+      border: 0.5px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+
+    .panel-header {
+      padding: 1.1rem 1.5rem;
+      border-bottom: 0.5px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .panel-title {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-tertiary);
+      font-weight: 500;
+    }
+
+    .panel-badge {
+      font-size: 0.68rem;
+      background: var(--accent-light);
+      color: var(--accent-mid);
+      padding: 0.2rem 0.6rem;
+      border-radius: 3px;
+      font-weight: 500;
+    }
+
+    .panel-body { padding: 1.25rem; }
+
+    .metric-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .metric {
+      background: var(--bg);
+      border: 0.5px solid var(--border);
+      border-radius: 8px;
+      padding: 1rem 1.1rem;
+    }
+
+    .metric-label {
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-tertiary);
+      margin-bottom: 0.3rem;
+    }
+
+    .metric-val {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1;
+    }
+
+    .metric-sub { font-size: 0.72rem; color: var(--accent-mid); margin-top: 0.25rem; }
+
+    .impact-block {
+      background: var(--bg);
+      border: 0.5px solid var(--border);
+      border-radius: 8px;
+      padding: 1rem 1.1rem;
+    }
+
+    .impact-label {
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-tertiary);
+      margin-bottom: 0.75rem;
+    }
+
+    .impact-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 9px;
+    }
+
+    .impact-item:last-child { margin-bottom: 0; }
+
+    .impact-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent-mid); flex-shrink: 0; }
+    .impact-bar-track { flex: 1; height: 6px; background: var(--bg-secondary); border-radius: 3px; overflow: hidden; }
+    .impact-bar-fill { height: 100%; border-radius: 3px; background: var(--accent-mid); opacity: 0.7; }
+    .impact-txt { font-size: 0.75rem; color: var(--text-secondary); width: 82px; }
+    .impact-pct { font-size: 0.72rem; color: var(--text-tertiary); width: 30px; text-align: right; }
+
+    /* MARQUEE */
+    .marquee-wrap {
+      border-top: 0.5px solid var(--border);
+      border-bottom: 0.5px solid var(--border);
+      background: var(--bg-secondary);
+      overflow: hidden;
+      padding: 0.85rem 0;
+    }
+
+    .marquee-track {
+      display: flex;
+      gap: 3rem;
+      white-space: nowrap;
+      animation: marquee 26s linear infinite;
+      width: max-content;
+    }
+
+    .marquee-track span { font-size: 0.8rem; color: var(--text-tertiary); }
+    .marquee-track strong { font-weight: 500; color: var(--text-secondary); }
+
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    /* POSITIONING STRIP */
+    .position-strip {
+      background: var(--accent);
+      padding: 3.5rem 4rem;
+      text-align: center;
+    }
+
+    .position-strip p {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: -0.5px;
+      line-height: 1.3;
+      max-width: 680px;
+      margin: 0 auto 0.75rem;
+      font-style: italic;
+    }
+
+    .position-strip .sub {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      color: var(--accent-muted);
+      font-weight: 300;
+    }
+
+    /* SERVICES */
+    .services-section {
+      padding: 6rem 4rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-eyebrow { margin-bottom: 0.6rem; }
+
+    .section-eyebrow-text {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-tertiary);
+    }
+
+    h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.1rem;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      color: var(--text);
+      line-height: 1.2;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      border: 0.5px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      margin-top: 3rem;
+      background: var(--border);
+    }
+
+    .service-card {
+      background: var(--bg);
+      padding: 2rem;
+      transition: background 0.2s;
+    }
+
+    .service-card:hover { background: var(--bg-secondary); }
+
+    .service-num {
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      color: var(--accent-muted);
+      margin-bottom: 1rem;
+    }
+
+    .service-card h3 { font-size: 0.95rem; font-weight: 500; margin-bottom: 0.6rem; }
+    .service-card p { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.65; }
+
+    /* ABOUT */
+    .about-section {
+      background: var(--bg-secondary);
+      border-top: 0.5px solid var(--border);
+      border-bottom: 0.5px solid var(--border);
+      padding: 6rem 4rem;
+    }
+
+    .about-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: start;
+    }
+
+    .about-left h2 { margin: 1rem 0 1.5rem; }
+
+    .about-left p {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      line-height: 1.8;
+      margin-bottom: 1rem;
+    }
+
+    .about-quote {
+      font-size: 0.9rem;
+      font-weight: 400;
+      color: var(--accent-mid);
+      border-left: 2px solid var(--accent-mid);
+      padding-left: 1rem;
+      margin: 1.5rem 0;
+      line-height: 1.7;
+      font-style: italic;
+    }
+
+    .pillar {
+      border-top: 0.5px solid var(--border);
+      padding: 1.25rem 0;
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+    }
+
+    .pillar:last-child { border-bottom: 0.5px solid var(--border); }
+
+    .pillar-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 6px;
+      background: var(--accent-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .pillar h4 { font-size: 0.9rem; font-weight: 500; margin-bottom: 0.25rem; }
+    .pillar p { font-size: 0.82rem; color: var(--text-secondary); line-height: 1.6; }
+
+    /* PROCESS */
+    .process-section {
+      padding: 6rem 4rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .process-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+
+    .step-num-wrap {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .step-circle {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 0.5px solid var(--border-mid);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.72rem;
+      font-weight: 500;
+      color: var(--text-tertiary);
+      flex-shrink: 0;
+    }
+
+    .step-line { flex: 1; height: 0.5px; background: var(--border); }
+
+    .process-step h3 { font-size: 0.95rem; font-weight: 500; margin-bottom: 0.5rem; }
+    .process-step p { font-size: 0.82rem; color: var(--text-secondary); line-height: 1.65; }
+
+    /* CTA */
+    .cta-section {
+      padding: 7rem 4rem;
+      text-align: center;
+      max-width: 660px;
+      margin: 0 auto;
+    }
+
+    .cta-section h2 { font-size: 2.2rem; margin: 0.75rem 0 1.25rem; }
+
+    .cta-section p {
+      color: var(--text-secondary);
+      font-size: 1rem;
+      margin-bottom: 0.75rem;
+      line-height: 1.8;
+      font-weight: 300;
+    }
+
+    .cta-note { font-size: 0.8rem !important; color: var(--text-tertiary) !important; margin-bottom: 2.5rem !important; }
+
+    /* FOOTER */
+    footer {
+      border-top: 0.5px solid var(--border);
+      padding: 2rem 4rem;
+    }
+
+    .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-copy { font-size: 0.78rem; color: var(--text-tertiary); }
+    .footer-links { display: flex; gap: 2rem; }
+    .footer-links a { font-size: 0.78rem; color: var(--text-tertiary); text-decoration: none; }
+    .footer-links a:hover { color: var(--text-secondary); }
+
+    @media (max-width: 900px) {
+      nav { padding: 1rem 1.5rem; }
+      nav ul { display: none; }
+      .hero { grid-template-columns: 1fr; padding: 3.5rem 1.5rem; gap: 3rem; }
+      h1 { font-size: 2.6rem; }
+      .about-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+      .services-grid { grid-template-columns: 1fr; }
+      .process-grid { grid-template-columns: 1fr 1fr; }
+      .services-section, .process-section { padding: 4rem 1.5rem; }
+      .about-section { padding: 4rem 1.5rem; }
+      .position-strip { padding: 3rem 1.5rem; }
+      .cta-section { padding: 4rem 1.5rem; }
+      footer { padding: 1.5rem; }
+      .footer-inner { flex-direction: column; gap: 1rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="logo">Simplex Consulting <span class="logo-dot"></span></a>
+  <ul>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#process">Process</a></li>
+    <li><a href="mailto:hello@simplexconsulting.com" class="nav-cta">Get in touch</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div>
+    <div class="hero-eyebrow">
+      <div class="eyebrow-line"></div>
+      <span class="eyebrow-text">Operations & Efficiency Consulting</span>
+    </div>
+    <h1>Eliminate<br>the <em>unnecessary.</em></h1>
+    <p class="hero-sub">Most companies don't fail because of bad ideas — they fail because of inefficient processes, poor structure, and lack of clarity.</p>
+    <div class="hero-tag">We bring big-company efficiency to small businesses.</div>
+    <div class="hero-actions">
+      <a href="mailto:hello@simplexconsulting.com" class="btn-primary">Let's talk →</a>
+      <a href="#services" class="btn-ghost">See what we do</a>
+    </div>
+  </div>
+  <div class="hero-panel">
+    <div class="panel-header">
+      <span class="panel-title">Typical client results</span>
+      <span class="panel-badge">After Simplex</span>
+    </div>
+    <div class="panel-body">
+      <div class="metric-row">
+        <div class="metric">
+          <div class="metric-label">Cost reduction</div>
+          <div class="metric-val">−23%</div>
+          <div class="metric-sub">avg. operational costs</div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">Process speed</div>
+          <div class="metric-val">+40%</div>
+          <div class="metric-sub">faster execution</div>
+        </div>
+      </div>
+      <div class="impact-block">
+        <div class="impact-label">Where we generate value</div>
+        <div class="impact-item">
+          <div class="impact-dot"></div>
+          <span class="impact-txt">Operations</span>
+          <div class="impact-bar-track"><div class="impact-bar-fill" style="width:94%"></div></div>
+          <span class="impact-pct">94%</span>
+        </div>
+        <div class="impact-item">
+          <div class="impact-dot"></div>
+          <span class="impact-txt">Cost & Supply</span>
+          <div class="impact-bar-track"><div class="impact-bar-fill" style="width:81%"></div></div>
+          <span class="impact-pct">81%</span>
+        </div>
+        <div class="impact-item">
+          <div class="impact-dot"></div>
+          <span class="impact-txt">Automation</span>
+          <div class="impact-bar-track"><div class="impact-bar-fill" style="width:76%"></div></div>
+          <span class="impact-pct">76%</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span><strong>Focus on what matters.</strong></span>
+    <span>·</span>
+    <span>Less complexity. Better performance.</span>
+    <span>·</span>
+    <span><strong>How can you serve your customers faster and cheaper?</strong></span>
+    <span>·</span>
+    <span>Generate real value.</span>
+    <span>·</span>
+    <span><strong>No jargon. No slides. Just results.</strong></span>
+    <span>·</span>
+    <span>Operational excellence, built for growing companies.</span>
+    <span>·</span>
+    <span><strong>Focus on what matters.</strong></span>
+    <span>·</span>
+    <span>Less complexity. Better performance.</span>
+    <span>·</span>
+    <span><strong>How can you serve your customers faster and cheaper?</strong></span>
+    <span>·</span>
+    <span>Generate real value.</span>
+    <span>·</span>
+    <span><strong>No jargon. No slides. Just results.</strong></span>
+    <span>·</span>
+    <span>Operational excellence, built for growing companies.</span>
+    <span>·</span>
+  </div>
+</div>
+
+<div class="position-strip">
+  <p>"Run your business like a top-tier operation."</p>
+  <span class="sub">We bring structured processes, data-driven decisions, and real efficiency into companies that are ready to level up.</span>
+</div>
+
+<section class="services-section" id="services">
+  <div class="section-eyebrow">
+    <span class="section-eyebrow-text">What we do</span>
+  </div>
+  <h2>Six ways we make<br>your business sharper.</h2>
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="service-num">01</div>
+      <h3>Operational Audit</h3>
+      <p>We analyze how your business actually runs — from workflows to decision-making — and identify inefficiencies, bottlenecks, and hidden costs.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-num">02</div>
+      <h3>Process Optimization</h3>
+      <p>We redesign your processes to make them faster, simpler, and more scalable — eliminating unnecessary steps and improving execution.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-num">03</div>
+      <h3>Cost & Supply Chain</h3>
+      <p>We identify cost-saving opportunities across suppliers, purchasing, and operations — without compromising quality.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-num">04</div>
+      <h3>Digital & Automation Setup</h3>
+      <p>We move manual work into structured digital systems — improving visibility, control, and efficiency across your team.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-num">05</div>
+      <h3>AI & Workflow Automation</h3>
+      <p>We implement simple, high-impact AI tools and workflows to automate repetitive tasks and improve decision-making.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-num">06</div>
+      <h3>Implementation & Training</h3>
+      <p>We don't just recommend — we help you implement changes and ensure your team knows how to sustain them long term.</p>
+    </div>
+  </div>
+</section>
+
+<section class="about-section" id="about">
+  <div class="about-inner">
+    <div class="about-left">
+      <div class="section-eyebrow">
+        <span class="section-eyebrow-text">About Simplex</span>
+      </div>
+      <h2>Small company.<br>Big-company standards.</h2>
+      <p>Simplex was built on a simple idea: small companies deserve the same level of operational excellence as the best organisations in the world.</p>
+      <p>With a background in Industrial Engineering and hands-on experience at organisations like Novo Nordisk, we bring structured thinking, analytical rigour, and practical execution to businesses that are ready to improve.</p>
+      <div class="about-quote">
+        "We combine process optimization, data-driven decision-making, and hands-on implementation. The result is simple: less waste, more clarity, and better performance."
+      </div>
+      <p>No jargon. No theoretical slides. Just clear analysis, practical improvements, and measurable results.</p>
+    </div>
+    <div class="about-right">
+      <div class="pillar">
+        <div class="pillar-icon">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 12L8 4l6 8" stroke="#2d6147" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M4.5 9.5h7" stroke="#2d6147" stroke-width="1.3" stroke-linecap="round"/></svg>
+        </div>
+        <div>
+          <h4>Process optimization</h4>
+          <p>Mapping, redesigning, and streamlining how work actually gets done — removing friction at every step.</p>
+        </div>
+      </div>
+      <div class="pillar">
+        <div class="pillar-icon">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="2" y="9" width="3" height="5" rx="1" fill="#2d6147"/><rect x="6.5" y="5" width="3" height="9" rx="1" fill="#2d6147" opacity="0.6"/><rect x="11" y="2" width="3" height="12" rx="1" fill="#2d6147" opacity="0.35"/></svg>
+        </div>
+        <div>
+          <h4>Data-driven decisions</h4>
+          <p>Replacing gut feel with clear metrics, KPIs, and structured analysis that drives confident action.</p>
+        </div>
+      </div>
+      <div class="pillar">
+        <div class="pillar-icon">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="5.5" stroke="#2d6147" stroke-width="1.4"/><path d="M8 5v3.5l2.5 1.5" stroke="#2d6147" stroke-width="1.3" stroke-linecap="round"/></svg>
+        </div>
+        <div>
+          <h4>Hands-on implementation</h4>
+          <p>We work alongside your team — not above it. Change sticks because we help build it, not just recommend it.</p>
+        </div>
+      </div>
+      <div class="pillar">
+        <div class="pillar-icon">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M8 3l5 5-5 5" stroke="#2d6147" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div>
+          <h4>Scalable systems</h4>
+          <p>Building structure that grows with you — so the improvements you make today keep paying off tomorrow.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="process-section" id="process">
+  <div class="section-eyebrow">
+    <span class="section-eyebrow-text">How we work</span>
+  </div>
+  <h2>From diagnosis to results,<br>in four clear steps.</h2>
+  <div class="process-grid">
+    <div class="process-step">
+      <div class="step-num-wrap">
+        <div class="step-circle">01</div>
+        <div class="step-line"></div>
+      </div>
+      <h3>Diagnose</h3>
+      <p>We map your current operations, identify where time and money are being lost, and build a clear picture of the gaps.</p>
+    </div>
+    <div class="process-step">
+      <div class="step-num-wrap">
+        <div class="step-circle">02</div>
+        <div class="step-line"></div>
+      </div>
+      <h3>Design</h3>
+      <p>We build a tailored improvement plan — specific, practical, and prioritised by the impact it will have on your business.</p>
+    </div>
+    <div class="process-step">
+      <div class="step-num-wrap">
+        <div class="step-circle">03</div>
+        <div class="step-line"></div>
+      </div>
+      <h3>Implement</h3>
+      <p>We work with your team to put the changes in place — hands-on, at your pace, with your people.</p>
+    </div>
+    <div class="process-step">
+      <div class="step-num-wrap">
+        <div class="step-circle">04</div>
+        <div class="step-line"></div>
+      </div>
+      <h3>Sustain</h3>
+      <p>We measure results, train your team, and ensure the improvements stick — long after the engagement ends.</p>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section">
+  <div class="section-eyebrow" style="justify-content:center">
+    <span class="section-eyebrow-text">Ready to start?</span>
+  </div>
+  <h2>Let's find where your business is losing time and money.</h2>
+  <p>A free, no-commitment conversation to identify your biggest operational opportunity.</p>
+  <p class="cta-note">No jargon. No pressure. Just a clear conversation about your business.</p>
+  <a href="mailto:hello@simplexconsulting.com" class="btn-primary" style="font-size:0.95rem; padding:0.9rem 2.25rem;">Get in touch →</a>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <a href="#" class="logo">Simplex Consulting <span class="logo-dot"></span></a>
+    <div class="footer-copy">© 2026 Simplex Consulting. All rights reserved.</div>
+    <div class="footer-links">
+      <a href="#services">Services</a>
+      <a href="#about">About</a>
+      <a href="mailto:hello@simplexconsulting.com">Contact</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
